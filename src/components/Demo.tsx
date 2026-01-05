@@ -11,6 +11,7 @@ import VoteCard from "./VoteCard";
 import CreatePoll from "./CreatePoll";
 import WhitelistManager from "./WhitelistManager";
 import AdminSettings from "./AdminSettings";
+import VoteResults from "./VoteResults";
 
 export default function Demo() {
   const { address, isConnected } = useAccount();
@@ -54,6 +55,8 @@ export default function Demo() {
             {activeTab === "create" && isAdmin && <CreatePoll onSuccess={refetchStatus} />}
             
             {activeTab === "admin" && isAdmin && <WhitelistManager />}
+
+            {activeTab === "results" && isAdmin && <VoteResults />}
 
             {activeTab === "settings" && isAdmin && <AdminSettings />}
 

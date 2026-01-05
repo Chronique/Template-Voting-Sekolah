@@ -1,7 +1,15 @@
+// src/components/bottom-navigation.tsx
 "use client";
 
 import { Tabs, TabItem } from "@worldcoin/mini-apps-ui-kit-react";
-import { CheckCircle, Plus, Group, Wallet, Settings } from "iconoir-react"; // Tambahkan Settings di sini
+import { 
+  HowToVote, 
+  AddCircleOutline, 
+  PeopleOutline, 
+  AccountCircle, 
+  Settings, 
+  Assessment 
+} from "@mui/icons-material"; // Ikon Material Design 3
 import { HapticWrapper } from "~/components/haptic-wrapper";
 
 interface BottomNavigationProps {
@@ -16,33 +24,36 @@ export function BottomNavigation({ activeTab, onTabChange, isAdmin, pollCreated 
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t py-3 z-50">
       <div className="max-w-lg mx-auto">
         <Tabs value={activeTab}>
-          {/* Tombol Vote */}
           <HapticWrapper onClick={() => onTabChange("vote")} hapticType="selection">
-            <TabItem value="vote" icon={<CheckCircle width={20} height={20} />} label="Vote" />
+            <TabItem value="vote" icon={<HowToVote />} label="Vote" />
           </HapticWrapper>
 
-          {/* Tombol Mulai (Hanya Admin & Jika Poll belum ada) */}
-          {isAdmin && !pollCreated && (
-            <HapticWrapper onClick={() => onTabChange("create")} hapticType="selection">
-              <TabItem value="create" icon={<Plus width={20} height={20} />} label="Mulai" />
+          {/* Tab Hasil - Hanya Admin yang bisa melihat */}
+          {isAdmin && pollCreated && (
+            <HapticWrapper onClick={() => onTabChange("results")} hapticType="selection">
+              <TabItem value="results" icon={<Assessment />} label="Hasil" />
             </HapticWrapper>
           )}
 
-          {/* Tombol Daftar Murid & Setting (Hanya Admin) */}
+          {isAdmin && !pollCreated && (
+            <HapticWrapper onClick={() => onTabChange("create")} hapticType="selection">
+              <TabItem value="create" icon={<AddCircleOutline />} label="Mulai" />
+            </HapticWrapper>
+          )}
+
           {isAdmin && (
             <>
               <HapticWrapper onClick={() => onTabChange("admin")} hapticType="selection">
-                <TabItem value="admin" icon={<Group width={20} height={20} />} label="Murid" />
+                <TabItem value="admin" icon={<PeopleOutline />} label="Murid" />
               </HapticWrapper>
               <HapticWrapper onClick={() => onTabChange("settings")} hapticType="selection">
-                <TabItem value="settings" icon={<Settings width={20} height={20} />} label="Setting" />
+                <TabItem value="settings" icon={<Settings />} label="Setting" />
               </HapticWrapper>
             </>
           )}
 
-          {/* Tombol Profil */}
           <HapticWrapper onClick={() => onTabChange("wallet")} hapticType="selection">
-            <TabItem value="wallet" icon={<Wallet width={20} height={20} />} label="Profil" />
+            <TabItem value="wallet" icon={<AccountCircle />} label="Profil" />
           </HapticWrapper>
         </Tabs>
       </div>

@@ -12,18 +12,12 @@ const WagmiProvider = dynamic(
   }
 );
 
-const ErudaProvider = dynamic(
-  () => import("~/components/providers/eruda-provider"),
-  {
-    ssr: false,
-  }
-);
+
 
 export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider>
       <FrameProvider>
-        <ErudaProvider />
         {children}
       </FrameProvider>
     </WagmiProvider>
