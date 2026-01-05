@@ -10,53 +10,49 @@ export function WalletConnect() {
   const { connectors, connect, isPending } = useConnect();
   const { disconnect } = useDisconnect();
 
-  // LOGIKA AUTO-DETECT (Otomatis konek jika di Warpcast/Smart Wallet)
+  // AUTO-DETECT: Otomatis masuk jika di dalam Farcaster/Warpcast
   useEffect(() => {
-    if (!isConnected && connectors.length > 0) {
-      // Coba konek otomatis ke Farcaster jika tersedia
-      const farcaster = connectors.find((c) => c.id === "farcaster");
-      if (farcaster) {
-        connect({ connector: farcaster });
-      } else {
-        // Jika bukan Farcaster, coba auto-connect ke Coinbase Smart Wallet
-        const coinbase = connectors.find((c) => c.id === "coinbaseWalletSDK");
-        if (coinbase) connect({ connector: coinbase });
-      }
+    if (!isConnected) {
+      const fc = connectors.find(c => c.id === "farcaster");
+      if (fc) connect({ connector: fc });
     }
   }, [isConnected, connectors, connect]);
 
   if (isConnected && address) {
     return (
-      <div className="flex items-center justify-between p-4 border rounded-2xl bg-white dark:bg-zinc-900 shadow-sm">
+      <div className="flex items-center justify-between p-4 border rounded-2xl bg-white shadow-sm">
         <div className="text-left">
-          <div className="font-bold text-[10px] text-gray-400 uppercase tracking-widest">Terhubung</div>
-          <div className="text-sm font-black text-blue-600 font-mono">{truncateAddress(address)}</div>
+          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-widest">Terhubung</p>
+          <p className="text-sm font-black text-blue-600 font-mono">{truncateAddress(address)}</p>
         </div>
-        <Button
-          onClick={() => disconnect()}
-          variant="outline"
-          size="sm"
-          className="rounded-xl border-red-100 text-red-500 hover:bg-red-50"
-        >
-          Putus
-        </Button>
+        <Button onClick={() => disconnect()} variant="outline" size="sm" className="text-red-500">Putus</Button>
       </div>
     );
   }
 
+  // Fungsi untuk memanggil koneksi berdasarkan ID
+  const connectTo = (id: string) => {
+    const connector = connectors.find(c => c.id === id);
+    if (connector) connect({ connector });
+    else alert(`Dompet ${id} tidak ditemukan. Pastikan sudah terinstal.`);
+  };
+
   return (
     <div className="w-full space-y-3">
-      {/* Tombol manual hanya muncul sebagai fallback atau untuk EOA */}
-      {connectors.map((connector) => (
-        <Button
-          key={connector.uid}
-          onClick={() => connect({ connector })}
-          disabled={isPending}
-          className="w-full py-7 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-lg shadow-xl shadow-blue-200"
-        >
-          {isPending ? "MENGHUBUNGKAN..." : `MULAI KONEKSI ${connector.name.toUpperCase()}`}
-        </Button>
-      ))}
+      {/* 1. Tombol Farcaster */}
+      <Button onClick={() => connectTo("farcaster")} disabled={isPending} className="w-full py-7 rounded-2xl bg-purple-600 hover:bg-purple-700 text-white font-black text-lg">
+        KONEKSI FARCASTER
+      </Button>
+
+      {/* 2. Tombol Base / Coinbase Wallet */}
+      <Button onClick={() => connectTo("coinbaseWalletSDK")} disabled={isPending} className="w-full py-7 rounded-2xl bg-blue-600 hover:bg-blue-700 text-white font-black text-lg">
+        BASE SMART WALLET
+      </Button>
+
+      {/* 3. Tombol MetaMask */}
+      <Button onClick={() => connectTo("metaMask")} disabled={isPending} className="w-full py-7 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white font-black text-lg">
+        METAMASK
+      </Button>
     </div>
   );
 }
