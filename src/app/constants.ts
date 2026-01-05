@@ -1,5 +1,6 @@
 // src/app/constants.ts
 export const CONTRACT_ADDRESS = "0xBB9D42b6186f52Ea5167051f7D66B3D6C04932A8";
+export const BUILDER_CODE_HEX = "62635f7667687139383365"; // Hex dari "bc_vghq983e"
 
 export const CLASS_VOTE_ABI = 
 [
