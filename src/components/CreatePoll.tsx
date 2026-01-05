@@ -22,8 +22,8 @@ export default function CreatePoll({ onSuccess }: any) {
     const paymasterUrl = process.env.NEXT_PUBLIC_PAYMASTER_URL;
     if (!paymasterUrl) return alert("Paymaster URL tidak ditemukan di .env!");
 
-    const names = candidateList.map(c => c.name).filter(n => n.trim() !== "");
-    const photos = candidateList.map(c => c.photo).filter(p => p.trim() !== "");
+    const names = candidateList.map(c => c.name);
+    const photos = candidateList.map(c => c.photo || ""); // Tetap kirim string kosong jika tidak ada foto
     
     if (names.length < 2) return alert("Minimal 2 kandidat harus diisi!");
 
