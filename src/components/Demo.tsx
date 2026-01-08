@@ -75,7 +75,7 @@ export default function Demo() {
 
             {/* TAB VERIFIKASI BARU: Kirim data whitelist pusat ke sini */}
             {activeTab === "verify" && isAdmin && (
-              <Verification whitelist={whitelist} />
+              <Verification  />
             )}
 
             {activeTab === "results" && isAdmin && <VoteResults />}
