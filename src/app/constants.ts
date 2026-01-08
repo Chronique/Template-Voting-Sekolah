@@ -1,5 +1,6 @@
 export const CONTRACT_ADDRESS = "0x3C9b3A6A56204dC2149cCD93Cc5Fb01677b5B8a6";
-export const BUILDER_CODE_HEX = "0x62635f7667687139383365"; // Pastikan ada 0x di depannya
+// Hexadecimal asli dari bc_vghq983e
+export const BUILDER_CODE_HEX = "0x62635f7667687139383365"; 
 
 export const CLASS_VOTE_ABI = [
   {
@@ -11,7 +12,7 @@ export const CLASS_VOTE_ABI = [
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
-  // --- FUNGSI WRITE (Harus ada di Paymaster CDP) ---
+  // --- FUNGSI WRITE (GASLESS) ---
   {
     "inputs": [{ "internalType": "uint256", "name": "_candidateIndex", "type": "uint256" }],
     "name": "vote",
@@ -57,7 +58,7 @@ export const CLASS_VOTE_ABI = [
     "stateMutability": "nonpayable",
     "type": "function"
   },
-  // --- FUNGSI VIEW (Membaca Data) ---
+  // --- FUNGSI VIEW (READ) ---
   {
     "inputs": [],
     "name": "getCandidates",

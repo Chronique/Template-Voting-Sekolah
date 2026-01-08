@@ -39,7 +39,7 @@ export default function VoteCard() {
       sendCalls({
         calls: [{
           to: CONTRACT_ADDRESS as `0x${string}`,
-          // FIX: Kirim data murni tanpa BUILDER_CODE_HEX
+          // FIX: Kirim data HEX murni dari encodeFunctionData
           data: encodeFunctionData({
             abi: CLASS_VOTE_ABI,
             functionName: "vote",
@@ -50,7 +50,7 @@ export default function VoteCard() {
       });
       
       setIsModalOpen(false); 
-      setTimeout(() => refetch(), 3000); // Refresh suara setelah transaksi masuk
+      setTimeout(() => refetch(), 3000); 
     } catch (e) { 
       alert("Gagal mengirim suara."); 
       setIsModalOpen(false);

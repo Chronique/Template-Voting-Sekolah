@@ -17,12 +17,11 @@ export default function AdminSettings() {
   // 1. Fungsi Update Judul (Hanya di Tab Setting)
   const handleUpdateTitle = async () => {
     if (!paymasterUrl || !newTitle) return alert("Data tidak lengkap");
-
     try {
       sendCalls({
         calls: [{
           to: CONTRACT_ADDRESS as `0x${string}`,
-          // FIX: Gunakan data murni tanpa BUILDER_CODE_HEX
+          // FIX: Gunakan data HEX murni
           data: encodeFunctionData({
             abi: CLASS_VOTE_ABI,
             functionName: "updateTitle",
@@ -31,22 +30,17 @@ export default function AdminSettings() {
         }],
         capabilities: { paymasterService: { url: paymasterUrl } }
       });
-      alert("Permintaan ganti judul dikirim!");
-      setNewTitle("");
-    } catch (e) {
-      alert("Gagal memperbarui judul.");
-    }
+      alert("Permintaan dikirim!");
+    } catch (e) { alert("Gagal."); }
   };
 
-  // 2. Fungsi Tambah Admin
   const handleAddAdmin = async () => {
     if (!paymasterUrl || !newAdmin.startsWith("0x")) return alert("Alamat tidak valid!");
-
     try {
       sendCalls({
         calls: [{
           to: CONTRACT_ADDRESS as `0x${string}`,
-          // FIX: Gunakan data murni
+          // FIX: Gunakan data HEX murni
           data: encodeFunctionData({
             abi: CLASS_VOTE_ABI,
             functionName: "addAdmin",
@@ -55,23 +49,17 @@ export default function AdminSettings() {
         }],
         capabilities: { paymasterService: { url: paymasterUrl } }
       });
-      alert("Permintaan tambah admin dikirim!");
       setNewAdmin("");
-    } catch (e) {
-      alert("Gagal menambah admin.");
-    }
+    } catch (e) { alert("Gagal."); }
   };
 
-  // 3. Fungsi Reset Poll
   const handleReset = async (clearWhitelist: boolean) => {
     if (!paymasterUrl) return;
-    if (!confirm("Apakah Anda yakin? Data yang dihapus tidak bisa dikembalikan.")) return;
-
     try {
       sendCalls({
         calls: [{
           to: CONTRACT_ADDRESS as `0x${string}`,
-          // FIX: Gunakan data murni
+          // FIX: Gunakan data HEX murni
           data: encodeFunctionData({
             abi: CLASS_VOTE_ABI,
             functionName: "resetPoll",
@@ -80,10 +68,7 @@ export default function AdminSettings() {
         }],
         capabilities: { paymasterService: { url: paymasterUrl } }
       });
-      alert("Permintaan reset dikirim!");
-    } catch (e) {
-      alert("Gagal reset.");
-    }
+    } catch (e) { alert("Gagal reset."); }
   };
 
   return (

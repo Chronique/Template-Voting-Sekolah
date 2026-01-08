@@ -5,9 +5,6 @@ import { useReadContract } from "wagmi";
 import { CONTRACT_ADDRESS, CLASS_VOTE_ABI } from "~/app/constants";
 import { CheckCircle, RadioButtonUnchecked, PlaylistAddCheck } from "@mui/icons-material";
 
-/**
- * Komponen pembantu untuk status tiap murid
- */
 function VoterStatus({ address, pollId }: { address: string; pollId: bigint }) {
   const { data: hasVoted } = useReadContract({
     abi: CLASS_VOTE_ABI,
@@ -41,9 +38,6 @@ function VoterStatus({ address, pollId }: { address: string; pollId: bigint }) {
   );
 }
 
-/**
- * Komponen Utama Tab Verifikasi
- */
 export function Verification() {
   const { data: whitelistData, refetch: refetchList } = useReadContract({
     abi: CLASS_VOTE_ABI,
@@ -74,16 +68,14 @@ export function Verification() {
         <h2 className="text-xl font-black text-zinc-900 dark:text-white uppercase tracking-tighter">
           Verifikasi Suara
         </h2>
-        <p className="text-[10px] font-bold text-zinc-400 uppercase tracking-[0.2em] mt-1">
-          SINKRONISASI DENGAN POLL ID: #{activePollId.toString()}
+        <p className="text-[10px] font-bold text-zinc-400 uppercase mt-1">
+          POLL ID: #{activePollId.toString()}
         </p>
       </div>
 
       {whitelist.length === 0 ? (
-        <div className="text-center p-12 bg-zinc-50 dark:bg-zinc-900/50 rounded-[32px] border-2 border-dashed border-zinc-200 dark:border-zinc-800">
-          <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">
-            Daftar Whitelist Kosong
-          </p>
+        <div className="text-center p-12 bg-zinc-50 rounded-[32px] border-2 border-dashed border-zinc-200">
+          <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest">Daftar Whitelist Kosong</p>
         </div>
       ) : (
         <div className="space-y-1">
