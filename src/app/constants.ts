@@ -1,5 +1,5 @@
 export const CONTRACT_ADDRESS = "0x3C9b3A6A56204dC2149cCD93Cc5Fb01677b5B8a6";
-export const BUILDER_CODE_HEX = "62635f7667687139383365";
+export const BUILDER_CODE_HEX = "0x62635f7667687139383365"; // Pastikan ada 0x di depannya
 
 export const CLASS_VOTE_ABI = [
   {
@@ -11,7 +11,53 @@ export const CLASS_VOTE_ABI = [
     "stateMutability": "nonpayable",
     "type": "constructor"
   },
-  // --- FUNGSI VIEW (Read Data) ---
+  // --- FUNGSI WRITE (Harus ada di Paymaster CDP) ---
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_candidateIndex", "type": "uint256" }],
+    "name": "vote",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "string[]", "name": "_names", "type": "string[]" },
+      { "internalType": "string[]", "name": "_photos", "type": "string[]" }
+    ],
+    "name": "createPoll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address[]", "name": "_voters", "type": "address[]" }],
+    "name": "addToWhitelist",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_admin", "type": "address" }],
+    "name": "addAdmin",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "string", "name": "_newTitle", "type": "string" }],
+    "name": "updateTitle",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "bool", "name": "_clearWhitelist", "type": "bool" }],
+    "name": "resetPoll",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  // --- FUNGSI VIEW (Membaca Data) ---
   {
     "inputs": [],
     "name": "getCandidates",
@@ -32,8 +78,8 @@ export const CLASS_VOTE_ABI = [
   },
   {
     "inputs": [],
-    "name": "getFullWhitelist",
-    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "name": "pollCreated",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -53,8 +99,8 @@ export const CLASS_VOTE_ABI = [
   },
   {
     "inputs": [],
-    "name": "pollCreated",
-    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "name": "getFullWhitelist",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
     "stateMutability": "view",
     "type": "function"
   },
@@ -73,52 +119,6 @@ export const CLASS_VOTE_ABI = [
     "name": "isAdmin",
     "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
     "stateMutability": "view",
-    "type": "function"
-  },
-  // --- FUNGSI WRITE (Write Data) ---
-  {
-    "inputs": [{ "internalType": "uint256", "name": "_candidateIndex", "type": "uint256" }],
-    "name": "vote",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address[]", "name": "_voters", "type": "address[]" }],
-    "name": "addToWhitelist",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "string", "name": "_newTitle", "type": "string" }],
-    "name": "updateTitle",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "bool", "name": "_clearWhitelist", "type": "bool" }],
-    "name": "resetPoll",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [
-      { "internalType": "string[]", "name": "_names", "type": "string[]" },
-      { "internalType": "string[]", "name": "_photos", "type": "string[]" }
-    ],
-    "name": "createPoll",
-    "outputs": [],
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "inputs": [{ "internalType": "address", "name": "_admin", "type": "address" }],
-    "name": "addAdmin",
-    "outputs": [],
-    "stateMutability": "nonpayable",
     "type": "function"
   }
 ] as const;
