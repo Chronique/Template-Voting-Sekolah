@@ -11,20 +11,25 @@ export default function AdminSettings() {
   const [newTitle, setNewTitle] = useState("");
   const { sendCalls, isPending } = useSendCalls();
 
+  const paymasterUrl = process.env.NEXT_PUBLIC_PAYMASTER_URL;
+
+  // Pastikan Builder Code memiliki prefix 0x
+  const safeBuilderCode = BUILDER_CODE_HEX.startsWith("0x") 
+    ? (BUILDER_CODE_HEX as `0x${string}`) 
+    : (`0x${BUILDER_CODE_HEX}` as `0x${string}`);
+
   const handleUpdateTitle = async () => {
-    const paymasterUrl = process.env.NEXT_PUBLIC_PAYMASTER_URL;
     if (!paymasterUrl || !newTitle) return;
 
     try {
-      // Encode data asli
       const baseData = encodeFunctionData({
         abi: CLASS_VOTE_ABI,
         functionName: "updateTitle",
         args: [newTitle],
       });
 
-      // Gabungkan dengan Builder Code menggunakan concat
-      const finalData = concat([baseData, BUILDER_CODE_HEX as `0x${string}`]);
+      // GABUNGKAN DENGAN CONCAT
+      const finalData = concat([baseData, safeBuilderCode]);
 
       sendCalls({
         calls: [{
@@ -42,8 +47,7 @@ export default function AdminSettings() {
   };
 
   const handleAddAdmin = async () => {
-    const paymasterUrl = process.env.NEXT_PUBLIC_PAYMASTER_URL;
-    if (!paymasterUrl || !newAdmin.startsWith("0x")) return alert("Data tidak valid!");
+    if (!paymasterUrl || !newAdmin.startsWith("0x")) return alert("Alamat tidak valid!");
 
     try {
       const baseData = encodeFunctionData({
@@ -52,7 +56,7 @@ export default function AdminSettings() {
         args: [newAdmin as `0x${string}`],
       });
 
-      const finalData = concat([baseData, BUILDER_CODE_HEX as `0x${string}`]);
+      const finalData = concat([baseData, safeBuilderCode]);
 
       sendCalls({
         calls: [{
@@ -65,12 +69,11 @@ export default function AdminSettings() {
       setNewAdmin("");
     } catch (e) {
       console.error(e);
-      alert("Gagal menambah admin.");
+      alert("Gagal menambah admin. Pastikan alamat belum jadi admin.");
     }
   };
 
   const handleReset = async (clearWhitelist: boolean) => {
-    const paymasterUrl = process.env.NEXT_PUBLIC_PAYMASTER_URL;
     if (!paymasterUrl) return;
     if (!confirm("Apakah Anda yakin ingin menghapus data ini?")) return;
 
@@ -81,7 +84,7 @@ export default function AdminSettings() {
         args: [clearWhitelist],
       });
 
-      const finalData = concat([baseData, BUILDER_CODE_HEX as `0x${string}`]);
+      const finalData = concat([baseData, safeBuilderCode]);
 
       sendCalls({
         calls: [{
@@ -93,20 +96,20 @@ export default function AdminSettings() {
       alert("Permintaan reset dikirim!");
     } catch (e) {
       console.error(e);
-      alert("Gagal reset.");
+      alert("Gagal reset data.");
     }
   };
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-6 rounded-[28px] border">
+      <div className="bg-white dark:bg-zinc-900 p-6 rounded-[28px] border shadow-sm">
         <div className="flex items-center gap-2 mb-4">
           <PersonAdd className="text-blue-500" />
-          <h2 className="font-black uppercase">Tambah Admin</h2>
+          <h2 className="font-black uppercase text-zinc-900 dark:text-white">Tambah Admin</h2>
         </div>
         <input 
           placeholder="0x..." 
-          className="w-full p-4 rounded-2xl border mb-3 text-sm outline-none focus:border-blue-500" 
+          className="w-full p-4 rounded-2xl border bg-zinc-50 dark:bg-zinc-800 mb-3 text-sm outline-none focus:border-blue-500" 
           value={newAdmin} 
           onChange={(e) => setNewAdmin(e.target.value)} 
         />
@@ -119,40 +122,40 @@ export default function AdminSettings() {
         </button>
       </div>
 
-      <div className="bg-white p-6 rounded-[28px] border shadow-sm mb-6">
+      <div className="bg-white dark:bg-zinc-900 p-6 rounded-[28px] border shadow-sm">
         <div className="flex items-center gap-2 mb-4">
           <EditNote className="text-blue-500" />
-          <h2 className="font-black uppercase text-sm">Ganti Nama Pemilihan</h2>
+          <h2 className="font-black uppercase text-sm text-zinc-900 dark:text-white">Ganti Nama Pemilihan</h2>
         </div>
         <input 
           placeholder="Contoh: PEMILIHAN KETUA OSIS" 
-          className="w-full p-4 rounded-2xl border bg-zinc-50 mb-3 text-sm outline-none focus:border-blue-500" 
+          className="w-full p-4 rounded-2xl border bg-zinc-50 dark:bg-zinc-800 mb-3 text-sm outline-none focus:border-blue-500" 
           value={newTitle} 
           onChange={(e) => setNewTitle(e.target.value)} 
         />
         <button 
           onClick={handleUpdateTitle} 
           disabled={isPending}
-          className="w-full bg-zinc-900 text-white rounded-2xl py-4 font-bold text-xs active:scale-95 transition-transform disabled:opacity-50"
+          className="w-full bg-zinc-900 dark:bg-white dark:text-zinc-900 text-white rounded-2xl py-4 font-bold text-xs active:scale-95 transition-transform disabled:opacity-50"
         >
           {isPending ? "MEMPROSES..." : "SIMPAN JUDUL BARU"}
         </button>
       </div>
 
-      <div className="bg-red-50 p-6 rounded-[28px] border border-red-100">
-        <h2 className="font-black text-red-600 uppercase mb-4">Area Berbahaya</h2>
+      <div className="bg-red-50 dark:bg-red-900/10 p-6 rounded-[28px] border border-red-100 dark:border-red-900/20">
+        <h2 className="font-black text-red-600 uppercase mb-4 text-sm tracking-widest">Area Berbahaya</h2>
         <div className="space-y-3">
           <button 
             onClick={() => handleReset(false)} 
             disabled={isPending}
-            className="w-full py-4 bg-white border border-red-200 text-red-600 rounded-2xl font-black text-[10px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
+            className="w-full py-4 bg-white dark:bg-zinc-900 border border-red-200 text-red-600 rounded-2xl font-black text-[10px] flex items-center justify-center gap-2 active:scale-95 transition-transform"
           >
             <RestartAlt fontSize="small" /> RESET & SIMPAN MURID
           </button>
           <button 
             onClick={() => handleReset(true)} 
             disabled={isPending}
-            className="w-full py-4 bg-red-600 text-white rounded-2xl font-black text-[10px] flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg shadow-red-200"
+            className="w-full py-4 bg-red-600 text-white rounded-2xl font-black text-[10px] flex items-center justify-center gap-2 active:scale-95 transition-transform shadow-lg shadow-red-200 dark:shadow-none"
           >
             <DeleteForever fontSize="small" /> RESET TOTAL (HAPUS SEMUA)
           </button>
