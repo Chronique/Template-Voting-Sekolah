@@ -1,344 +1,193 @@
 // src/app/constants.ts
-export const CONTRACT_ADDRESS = "0x91B76ee72F7739a429ab59Db2D43C104dA16E5b6";
-export const BUILDER_CODE_HEX = "62635f7667687139383365"; // Hex dari "bc_vghq983e"
 
-export const CLASS_VOTE_ABI = 
-[
+// Alamat Kontrak Baru
+export const CONTRACT_ADDRESS = "0x6Eaf2934e3b85660D6F77F62d473F4E36abA4527";
+
+// Builder Code Hex (ASCII: bc_vghq983e)
+// Disarankan menggunakan awalan 0x agar kompatibel dengan fungsi concat viem
+export const BUILDER_CODE_HEX = "0x62635f7667687139383365"; 
+
+export const CLASS_VOTE_ABI = [
   {
-    "type": "constructor",
     "inputs": [
-      {
-        "name": "_admin1",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "_admin2",
-        "type": "address",
-        "internalType": "address"
-      },
-      {
-        "name": "_admin3",
-        "type": "address",
-        "internalType": "address"
-      }
+      { "internalType": "address", "name": "_admin1", "type": "address" },
+      { "internalType": "address", "name": "_admin2", "type": "address" },
+      { "internalType": "address", "name": "_admin3", "type": "address" }
     ],
-    "stateMutability": "nonpayable"
-  },
-
-  {
-  "name": "getFullWhitelist",
-  "type": "function",
-  "inputs": [],
-  "outputs": [{ "type": "address[]" }],
-  "stateMutability": "view"
+    "stateMutability": "nonpayable",
+    "type": "constructor"
   },
   {
-  "name": "getFullAdmins",
-  "type": "function",
-  "inputs": [],
-  "outputs": [{ "type": "address[]" }],
-  "stateMutability": "view"
-  },
-
-  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "indexed": false, "internalType": "string", "name": "title", "type": "string" }
+    ],
     "name": "PollCreated",
-    "type": "event",
-    "inputs": [
-      {
-        "name": "id",
-        "type": "uint256",
-        "indexed": true,
-        "internalType": "uint256"
-      },
-      {
-        "name": "title",
-        "type": "string",
-        "indexed": false,
-        "internalType": "string"
-      }
-    ],
-    "anonymous": false
+    "type": "event"
   },
   {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "id", "type": "uint256" },
+      { "indexed": false, "internalType": "address", "name": "voter", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "candidateIndex", "type": "uint256" }
+    ],
     "name": "Voted",
-    "type": "event",
-    "inputs": [
-      {
-        "name": "id",
-        "type": "uint256",
-        "indexed": true,
-        "internalType": "uint256"
-      },
-      {
-        "name": "voter",
-        "type": "address",
-        "indexed": false,
-        "internalType": "address"
-      },
-      {
-        "name": "candidateIndex",
-        "type": "uint256",
-        "indexed": false,
-        "internalType": "uint256"
-      }
-    ],
-    "anonymous": false
+    "type": "event"
   },
   {
+    "inputs": [{ "internalType": "address", "name": "_admin", "type": "address" }],
     "name": "addAdmin",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "_admin",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
     "outputs": [],
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
+    "inputs": [{ "internalType": "address[]", "name": "_voters", "type": "address[]" }],
     "name": "addToWhitelist",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "_voters",
-        "type": "address[]",
-        "internalType": "address[]"
-      }
-    ],
     "outputs": [],
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "adminAddresses",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
     "name": "candidates",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
     "outputs": [
-      {
-        "name": "name",
-        "type": "string",
-        "internalType": "string"
-      },
-      {
-        "name": "photoUrl",
-        "type": "string",
-        "internalType": "string"
-      },
-      {
-        "name": "voteCount",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
+      { "internalType": "string", "name": "name", "type": "string" },
+      { "internalType": "string", "name": "photoUrl", "type": "string" },
+      { "internalType": "uint256", "name": "voteCount", "type": "uint256" }
     ],
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "inputs": [
+      { "internalType": "string[]", "name": "_names", "type": "string[]" },
+      { "internalType": "string[]", "name": "_photos", "type": "string[]" }
+    ],
     "name": "createPoll",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "_names",
-        "type": "string[]",
-        "internalType": "string[]"
-      },
-      {
-        "name": "_photos",
-        "type": "string[]",
-        "internalType": "string[]"
-      }
-    ],
     "outputs": [],
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
+    "inputs": [],
     "name": "getCandidates",
-    "type": "function",
-    "inputs": [],
     "outputs": [
       {
-        "name": "",
-        "type": "tuple[]",
         "components": [
-          {
-            "name": "name",
-            "type": "string",
-            "internalType": "string"
-          },
-          {
-            "name": "photoUrl",
-            "type": "string",
-            "internalType": "string"
-          },
-          {
-            "name": "voteCount",
-            "type": "uint256",
-            "internalType": "uint256"
-          }
+          { "internalType": "string", "name": "name", "type": "string" },
+          { "internalType": "string", "name": "photoUrl", "type": "string" },
+          { "internalType": "uint256", "name": "voteCount", "type": "uint256" }
         ],
-        "internalType": "struct SMP21Voting.Candidate[]"
+        "internalType": "struct SMP21Voting.Candidate[]",
+        "name": "",
+        "type": "tuple[]"
       }
     ],
-    "stateMutability": "view"
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getFullAdmins",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getFullWhitelist",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      { "internalType": "uint256", "name": "", "type": "uint256" },
+      { "internalType": "address", "name": "", "type": "address" }
+    ],
     "name": "hasVotedInPoll",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      },
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool",
-        "internalType": "bool"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "isAdmin",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool",
-        "internalType": "bool"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "inputs": [],
     "name": "owner",
-    "type": "function",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "inputs": [],
     "name": "pollCreated",
-    "type": "function",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool",
-        "internalType": "bool"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "inputs": [],
     "name": "pollId",
-    "type": "function",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "inputs": [],
     "name": "pollTitle",
-    "type": "function",
-    "inputs": [],
-    "outputs": [
-      {
-        "name": "",
-        "type": "string",
-        "internalType": "string"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "string", "name": "", "type": "string" }],
+    "stateMutability": "view",
+    "type": "function"
   },
   {
+    "inputs": [{ "internalType": "bool", "name": "_clearWhitelist", "type": "bool" }],
     "name": "resetPoll",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "_clearWhitelist",
-        "type": "bool",
-        "internalType": "bool"
-      }
-    ],
     "outputs": [],
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
+    "inputs": [{ "internalType": "string", "name": "_newTitle", "type": "string" }],
     "name": "updateTitle",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "_newTitle",
-        "type": "string",
-        "internalType": "string"
-      }
-    ],
     "outputs": [],
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
+    "inputs": [{ "internalType": "uint256", "name": "_candidateIndex", "type": "uint256" }],
     "name": "vote",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "_candidateIndex",
-        "type": "uint256",
-        "internalType": "uint256"
-      }
-    ],
     "outputs": [],
-    "stateMutability": "nonpayable"
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
     "name": "whitelist",
-    "type": "function",
-    "inputs": [
-      {
-        "name": "",
-        "type": "address",
-        "internalType": "address"
-      }
-    ],
-    "outputs": [
-      {
-        "name": "",
-        "type": "bool",
-        "internalType": "bool"
-      }
-    ],
-    "stateMutability": "view"
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "whitelistAddresses",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
   }
 ] as const;
