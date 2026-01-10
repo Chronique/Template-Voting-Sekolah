@@ -1,61 +1,104 @@
-# 🗳️ ClassVote & SMP21 On-Chain Voting
+# 🗳️ Template Voting Sekolah On-Chain (Base Network)
+
+Template aplikasi **Farcaster Mini-App** yang dirancang khusus untuk pemilihan ketua kelas, OSIS, atau organisasi sekolah lainnya. Sistem ini berjalan sepenuhnya di atas blockchain Base, memastikan transparansi mutlak tanpa biaya gas (**Gasless**) bagi para pemilih.
+
+## 🚀 Fitur Utama
+* **Gasless Voting**: Murid dapat memilih tanpa saldo ETH (biaya transaksi disponsori melalui Paymaster).
+* **Integrasi Farcaster**: Berjalan sebagai Mini-App di Warpcast atau klien Farcaster lainnya.
+* **Admin Dashboard**: Fitur untuk menambah admin, mengelola whitelist murid, dan mengganti judul pemilihan.
+* **Verifikasi Transparan**: Daftar Admin dan Murid ditampilkan secara publik di tab Verifikasi.
+* **Hasil Real-Time**: Perolehan suara dihitung otomatis oleh Smart Contract.
+
+---
+
+## 🛠️ Persiapan Awal
+Sebelum menjalankan aplikasi, pastikan Anda memiliki:
+1.  **Node.js** (Versi 18 atau terbaru).
+2.  **Akun GitHub** untuk hosting kode.
+3.  **Akun Coinbase Developer Platform (CDP)** untuk mengaktifkan fitur Gasless (Paymaster).
+4.  **Akun Vercel** untuk melakukan deployment aplikasi secara online.
+
+---
+
+## ⚙️ Langkah Instalasi
+
+### 1. Clone Repositori
+```bash
+git clone [https://github.com/Chronique/Template-Voting-Sekolah.git](https://github.com/Chronique/Template-Voting-Sekolah.git)
+cd Template-Voting-Sekolah
+npm install
+```
 
 
-![Application Screenshot](./assets/Screenshot%202026-01-06%20000512.png)
+### 2. Konfigurasi Environment
+Buat file .env di folder utama dan isi dengan URL Paymaster Anda:
+```bash
+# Salin file ini ke .env dan isi nilainya
 
-A decentralized, transparent, and user-friendly voting ecosystem built on the Base network. This project is designed to digitize school elections (such as Class President or Student Council) using blockchain technology to ensure every vote is tamper-proof and verifiable.
+NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID= // isi dengan Wallet Connect Project ID Anda
+NEXT_PUBLIC_ALCHEMY_RPC_URL= // isi dengan Alchemy RPC URL Anda
+NEXT_PUBLIC_QUICKNODE_RPC_URL= // isi dengan QuickNode RPC URL Anda
+NEXT_PUBLIC_ANKR_RPC_URL= // isi dengan Ankr RPC URL Anda
+NEXT_PUBLIC_PAYMASTER_URL= // isi dengan Paymaster URL Anda
 
-🚀 Key Features
-Gasless Transactions: Powered by Base Paymaster, allowing students to vote without holding any ETH. The school sponsors the gas fees for a seamless user experience.
+# Opsi: Jika Anda menggunakan layanan lain, tambahkan variabel lingkungan tambahan di sini
+```
 
-Dynamic Poll Titles: Admins can update the election title (e.g., from "Class Election" to "Student Council Election") directly through the UI without redeploying the contract.
+### 3. Setup Smart Contract
+Deploy Smart Contract (Solidity) Anda terlebih dahulu. Setelah mendapatkan alamat kontrak, perbarui file src/app/constants.ts:
+```bash
+// src/app/constants.ts
+// Isi dengan alamat smart contract yang sudah di deploy,pastikan sudah terverifikasi
+export const CONTRACT_ADDRESS = "0x0000000000000000000000000000000000000000";
 
-Multiple Admin Support: Securely manage multiple admin accounts (Teachers, Principals, or Committee members) registered directly on the blockchain.
+// Builder Code dari Base.dev (jika tidak ada hubungi saya)
+export const BUILDER_CODE_HEX = "base kode here"; 
 
-Sessional Voting (Poll ID): Supports multiple election cycles using a unique pollID. This allows the same contract to be reused for different elections without losing the student whitelist.
+export const CLASS_VOTE_ABI = [
+  // Masukkan ABI Lengkap dari Smart Contract 
+] as const;
+```
 
-Transparent & Immutable: All results are recorded permanently on the Base ledger, preventing any data manipulation.
+### 🎨 Kustomisasi Branding Sekolah
+Untuk menyesuaikan tampilan dengan identitas sekolah Anda, ubah bagian berikut:
 
-Base Builder Integrated: Proudly contributing to the Base ecosystem with integrated Builder Codes on every transaction.
+Ganti Nama & Lokasi Sekolah
+Buka file src/components/top-bar.tsx dan ubah teks berikut:
+```bash
+// Ganti teks di dalam komponen TopBar
+<h1 className="...">NAMA SEKOLAH ANDA</h1>
+<p className="...">KOTA / PROVINSI</p>
+```
 
-📜 Smart Contracts
-This repository contains the following contracts:
+### Ganti Logo
+1. Simpan logo sekolah Anda di folder **public/logo-sekolah.png.**
+2. Pastikan referensi gambar di **src/components/top-bar.tsx sudah mengarah ke file tersebut.**
+---
 
-contracts/ClassVote.sol: The initial version for basic on-chain voting.
+📋 Struktur Smart Contract yang Dibutuhkan
+Agar template ini berfungsi, Smart Contract Anda harus memiliki fungsi berikut:
 
-contracts/SMP21Voting.sol: The advanced version optimized for school environments with multi-admin support, dynamic titles, and session management.
+* **vote(uint256):** Untuk memberikan suara.
 
-🛠️ Tech Stack
-Smart Contracts: Solidity
+* **addAdmin(address):** Untuk menambah akses admin baru.
 
-Network: Base (Layer 2)
+* **addToWhitelist(address[]):** Untuk mendaftarkan alamat wallet murid.
 
-Blockchain Hooks: Wagmi & Viem
+* **getFullAdmins():** Untuk mengambil daftar semua admin.
 
-Frontend: React & Next.js
+* **getFullWhitelist():** Untuk mengambil daftar semua murid terdaftar.
+ 
 
-Animations: Framer Motion (for smooth, cinematic UI transitions)
+### 🚢 Deployment
+Anda bisa melakukan deploy frontend ini menggunakan Vercel atau Netlify secara gratis. Pastikan untuk memasukkan NEXT_PUBLIC_PAYMASTER_URL di pengaturan Environment Variables pada platform hosting Anda.
 
-Design System: Material Design 3 (M3)
+### 📄 Lisensi
+Distributed under the MIT License. See LICENSE for more information.
 
-⚙️ How It Works
-Admin Dashboard
-Setup Candidates: Add candidate names and photo URLs (Supports direct links from Google Drive).
 
-Student Whitelisting: Register student wallet addresses to grant them voting rights. The whitelist persists across different election sessions.
 
-Title Management: Change the election header dynamically via the Admin Settings tab.
 
-Voting Process
-Confirmation: A built-in confirmation prompt ensures voters are certain of their choice before submitting.
 
-One Vote Per Session: Students can only vote once per pollID, mirroring real-world election integrity.
 
-🏗️ Developer Info
-This project is part of the Base Builder community.
 
-Builder Code: bc_vghq983e
 
-Built with ❤️ for the digital transformation of SMP Negeri 21 Jambi.
-
-Verified on BaseScan: [0x91B76ee72F7739a429ab59Db2D43C104dA16E5b6] (https://basescan.org/address/0x91B76ee72F7739a429ab59Db2D43C104dA16E5b6#code)
