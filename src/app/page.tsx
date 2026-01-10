@@ -33,8 +33,8 @@ export async function generateMetadata(): Promise<Metadata> {
     other: {
       "fc:frame": JSON.stringify(frame),
       "fc:miniapp": JSON.stringify(frame),
-      // MASUKKAN KODE BASE DEV DI SINI
-      "base:app_id": "695b6e784d3a403912ed8de8",
+      // MASUKKAN KODE BASE DEV DI SINI,jika tidak punya hubungi saya melalui X.com/adhichronique
+      "base:app_id": "base kode here",
     }
   };
 }

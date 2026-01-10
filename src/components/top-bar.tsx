@@ -26,8 +26,8 @@ export function TopBar() {
         {/* Logo Sekolah */}
         <div className="relative z-10 bg-white dark:bg-zinc-950 pr-1">
           <Image 
-            src="/logo-smp21.png" 
-            alt="Logo SMP 21 Jambi" 
+            src="/logo-sekolah.png" //logo sekolah
+            alt="logo-sekolah.png" // Ganti dengan path logo sekolah Anda
             width={56} // Ukuran lebih besar (w-14)
             height={56}
             className="h-14 w-14 object-contain drop-shadow-sm"
@@ -45,11 +45,12 @@ export function TopBar() {
             delay: 0.5                   // Jeda sebentar setelah load
           }}
         >
+          {/* nama sekolah */}
           <h1 className="text-base font-black leading-none text-zinc-900 dark:text-white tracking-tighter">
-            SMP NEGERI 21
+            SMP NEGERI ...
           </h1>
           <p className="text-[9px] font-bold text-blue-600 uppercase tracking-[0.2em] mt-0.5">
-            KOTA JAMBI
+            KOTA ...
           </p>
         </motion.div>
       </div>
