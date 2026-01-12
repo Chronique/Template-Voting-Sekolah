@@ -8,7 +8,8 @@ Template aplikasi **Farcaster Mini-App** yang dirancang khusus untuk pemilihan k
 
 ## 🚀 Fitur Utama
 * **Gasless Voting**: Murid dapat memilih tanpa saldo ETH (biaya transaksi disponsori melalui Paymaster).
-* **Integrasi Farcaster**: Berjalan sebagai Mini-App di Warpcast atau klien Farcaster lainnya.
+* **Integrasi Farcaster dan Base App**: Berjalan sebagai Mini-App di Farcaster dan Base App lainnya.
+* **Web browser**: Chrome,Mozilla,Safari (smartphone ataupun Desktop).
 * **Admin Dashboard**: Fitur untuk menambah admin, mengelola whitelist murid, dan mengganti judul pemilihan.
 * **Verifikasi Transparan**: Daftar Admin dan Murid ditampilkan secara publik di tab Verifikasi.
 * **Hasil Real-Time**: Perolehan suara dihitung otomatis oleh Smart Contract.
