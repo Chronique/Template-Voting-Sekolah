@@ -1,4 +1,8 @@
-# 🗳️ Template Voting Sekolah On-Chain (Base Network)
+# # 🗳️ Template Voting Sekolah On-Chain (Base Network)
+
+![GitHub repo size](https://img.shields.io/github/repo-size/Chronique/Template-Voting-Sekolah?color=blue)
+![GitHub License](https://img.shields.io/github/license/Chronique/Template-Voting-Sekolah?color=green)
+[![Follow on X](https://img.shields.io/twitter/follow/adhichronique?style=social)](https://x.com/adhichronique)
 
 Template aplikasi **Farcaster Mini-App** yang dirancang khusus untuk pemilihan ketua kelas, OSIS, atau organisasi sekolah lainnya. Sistem ini berjalan sepenuhnya di atas blockchain Base, memastikan transparansi mutlak tanpa biaya gas (**Gasless**) bagi para pemilih.
 
@@ -29,8 +33,21 @@ cd Template-Voting-Sekolah
 npm install
 ```
 
+2. Install Paket Pendukung (Wajib)
+Karena adanya migrasi ke OnchainKit dan penambahan fitur animasi, jalankan perintah ini untuk memastikan semua modul tersedia:
+```bash
+# Install SDK Onchain & Animasi
+npm install @coinbase/onchainkit framer-motion canvas-confetti --legacy-peer-deps
 
-### 2. Konfigurasi Environment
+# Install Icon & UI Material (MUI)
+npm install @mui/icons-material @mui/material @emotion/react @emotion/styled --legacy-peer-deps
+
+# Install Type Definitions (Menghilangkan error merah di VS Code)
+npm install -D @types/canvas-confetti --legacy-peer-deps
+```
+
+
+### 3. Konfigurasi Environment
 Buat file .env di folder utama dan isi dengan URL Paymaster Anda:
 ```bash
 # Salin file ini ke .env dan isi nilainya
@@ -44,7 +61,7 @@ NEXT_PUBLIC_PAYMASTER_URL= // isi dengan Paymaster URL Anda
 # Opsi: Jika Anda menggunakan layanan lain, tambahkan variabel lingkungan tambahan di sini
 ```
 
-### 3. Setup Smart Contract
+### 4. Setup Smart Contract
 Deploy Smart Contract (Solidity) Anda terlebih dahulu. Setelah mendapatkan alamat kontrak, perbarui file src/app/constants.ts:
 ```bash
 // src/app/constants.ts
@@ -87,7 +104,20 @@ Agar template ini berfungsi, Smart Contract Anda harus memiliki fungsi berikut:
 * **getFullAdmins():** Untuk mengambil daftar semua admin.
 
 * **getFullWhitelist():** Untuk mengambil daftar semua murid terdaftar.
- 
+
+---
+
+ ### 🎨 Kustomisasi Identitas Sekolah
+
+Gunakan panduan tabel di bawah ini untuk mengubah tampilan aplikasi sesuai identitas sekolah Anda:
+
+| Komponen | Lokasi File | Cara Mengubah |
+| :---: | :---: | :---: |
+| **Nama Sekolah** | `src/components/top-bar.tsx` | Ganti teks `SMP NEGERI 21` |
+| **Kota/Provinsi** | `src/components/top-bar.tsx` | Ganti teks `JAMBI` |
+| **Logo Sekolah** | `public/logo-sekolah.png` | Timpa file dengan logo baru (format .png) |
+| **Warna Tema** | `tailwind.config.ts` | Ubah kode warna pada bagian `primary` |
+| **Daftar Kandidat** | Admin Dashboard | Tambahkan via menu **Create Poll** di aplikasi |
 
 ### 🚢 Deployment
 Anda bisa melakukan deploy frontend ini menggunakan Vercel atau Netlify secara gratis. Pastikan untuk memasukkan NEXT_PUBLIC_PAYMASTER_URL di pengaturan Environment Variables pada platform hosting Anda.
