@@ -112,8 +112,8 @@ Gunakan panduan tabel di bawah ini untuk mengubah tampilan aplikasi sesuai ident
 
 | Komponen | Lokasi File | Cara Mengubah |
 | :---: | :---: | :---: |
-| **Nama Sekolah** | `src/components/top-bar.tsx` | Ganti teks `SMP NEGERI 21` |
-| **Kota/Provinsi** | `src/components/top-bar.tsx` | Ganti teks `JAMBI` |
+| **Nama Sekolah** | `src/components/top-bar.tsx` | Ganti teks `  SMP NEGERI ...` |
+| **Kota/Provinsi** | `src/components/top-bar.tsx` | Ganti teks `KOTA...` |
 | **Logo Sekolah** | `public/logo-sekolah.png` | Timpa file dengan logo baru (format .png) |
 | **Warna Tema** | `tailwind.config.ts` | Ubah kode warna pada bagian `primary` |
 | **Daftar Kandidat** | Admin Dashboard | Tambahkan via menu **Create Poll** di aplikasi |
