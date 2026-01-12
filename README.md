@@ -1,8 +1,6 @@
-# # 🗳️ Template Voting Sekolah On-Chain (Base Network)
+# # 🗳️ Template Voting Sekolah On-Chain (Base Network
 
-![GitHub repo size](https://img.shields.io/github/repo-size/Chronique/Template-Voting-Sekolah?color=blue)
-![GitHub License](https://img.shields.io/github/license/Chronique/Template-Voting-Sekolah?color=green)
-[![Follow on X](https://img.shields.io/twitter/follow/adhichronique?style=social)](https://x.com/adhichronique)
+![Repo Size](https://img.shields.io/github/repo-size/Chronique/Template-Voting-Sekolah?color=blue) ![License](https://img.shields.io/github/license/Chronique/Template-Voting-Sekolah?color=green) [![Follow on X](https://img.shields.io/twitter/follow/adhichronique?style=social)](https://x.com/adhichronique)
 
 Template aplikasi **Farcaster Mini-App** yang dirancang khusus untuk pemilihan ketua kelas, OSIS, atau organisasi sekolah lainnya. Sistem ini berjalan sepenuhnya di atas blockchain Base, memastikan transparansi mutlak tanpa biaya gas (**Gasless**) bagi para pemilih.
 
